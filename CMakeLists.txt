@@ -12,6 +12,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/chapter0)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/chapter1)
 
 if (MSVC)
     add_compile_options(/utf-8)
