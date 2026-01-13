@@ -1,4 +1,4 @@
-﻿# Chapter2 通过 uniform 传递数据
+﻿# Chapter02 通过 uniform 传递数据
 
 [返回](../../README.md)
 

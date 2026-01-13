@@ -1,4 +1,4 @@
-﻿# Chapter3 使用 uniform block 和 uniform buffer object
+﻿# Chapter03 使用 uniform block 和 uniform buffer object
 
 [返回](../../README.md)
 

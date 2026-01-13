@@ -1,26 +1,32 @@
 ﻿#include "glad/gl.h"
 #include "GLFW/glfw3.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
 #include <iostream>
 #include <string>
 #include <filesystem>
 #include <fstream>
 #include <sstream>
-#include <vector>
 
 GLFWwindow* window = nullptr;
+GLuint vbo[2] = { 0, 0 };
+GLuint vao = 0;
 GLuint vertex_shader = 0;
 GLuint fragment_shader = 0;
 GLuint shader_program = 0;
-GLenum shader_format = 0;
+float last_time = 0.0f;
+float angle = 0.0f;
 
 std::string LoadShaderSource(const std::filesystem::path shader_file_path);
 std::string GetShaderInfoLog(GLuint shader);
 std::string GetProgramInfoLog(GLuint program);
 
+void InitVertexData();
 void LoadShaderFromSourceCode();
-void SaveShaderBinary();
-void LoadShaderFromBinary();
+void Update();
 
 int main()
 {
@@ -38,7 +44,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    window = glfwCreateWindow(800, 600, "Chapter0", nullptr, nullptr);
+    window = glfwCreateWindow(800, 600, "Chapter2", nullptr, nullptr);
     if (!window)
     {
         std::cerr << "创建窗口失败" << std::endl;
@@ -80,26 +86,30 @@ int main()
         std::cout << "    " << glGetStringi(GL_EXTENSIONS, i) << std::endl;
     }
 
+    // 设置视口大小
+    glViewport(0, 0, 800, 600);
+
     // 设置背景颜色
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+    // 初始化几何数据
+    InitVertexData();
 
     // 从着色器源代码加载和编译着色器
     LoadShaderFromSourceCode();
 
-    // 将着色器程序保存为二进制
-    SaveShaderBinary();
-
-    // 删除着色器程序
-    glDeleteProgram(shader_program);
-    shader_program = 0;
-
-    // 从二进制加载着色器程序
-    LoadShaderFromBinary();
+    last_time = static_cast<float>(glfwGetTime());
 
     // 渲染循环
     while (!glfwWindowShouldClose(window))
     {
+        Update();
+
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glBindVertexArray(vao);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glBindVertexArray(0);
 
         glfwSwapBuffers(window);
 
@@ -108,6 +118,8 @@ int main()
 
     // 清理和退出
     glDeleteProgram(shader_program);
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(2, vbo);
     glfwDestroyWindow(window);
     glfwTerminate();
 
@@ -159,6 +171,52 @@ std::string GetProgramInfoLog(GLuint program)
     return std::string();
 }
 
+void InitVertexData()
+{
+    float position_data[]
+    {
+        -0.8f, -0.8f, 0.0f,
+         0.8f, -0.8f, 0.0f,
+         0.0f,  0.8f, 0.0f,
+    };
+    float color_data[]
+    {
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+    };
+
+    // 创建缓冲区
+    glGenBuffers(2, vbo);
+    GLuint position_vbo = vbo[0];
+    GLuint color_vbo = vbo[1];
+
+    // 绑定缓冲区并传输数据
+    glBindBuffer(GL_ARRAY_BUFFER, position_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(position_data), position_data, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, color_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(color_data), color_data, GL_STATIC_DRAW);
+
+    // 创建 VAO
+    glGenVertexArrays(1, &vao);
+
+    // 绑定 VAO 并设置格式
+    glBindVertexArray(vao);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glBindVertexBuffer(0, position_vbo, 0, 3 * sizeof(float));
+    glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
+    glVertexAttribBinding(0, 0);
+
+    glBindVertexBuffer(1, color_vbo, 0, 3 * sizeof(float));
+    glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, 0);
+    glVertexAttribBinding(1, 1);
+
+    glBindVertexArray(0);
+}
+
 void LoadShaderFromSourceCode()
 {
     // 创建顶点着色器
@@ -170,7 +228,7 @@ void LoadShaderFromSourceCode()
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
-    std::string vertex_shader_source = LoadShaderSource("../../assets/shaders/chapter0/basic.vs.glsl");
+    std::string vertex_shader_source = LoadShaderSource("../../assets/shaders/chapter02/use_uniform.vs.glsl");
     const GLchar* vertex_shader_source_array[] = { vertex_shader_source.c_str() };
     glShaderSource(vertex_shader, 1, vertex_shader_source_array, nullptr);
     glCompileShader(vertex_shader);
@@ -196,7 +254,7 @@ void LoadShaderFromSourceCode()
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
-    std::string fragment_shader_source = LoadShaderSource("../../assets/shaders/chapter0/basic.fs.glsl");
+    std::string fragment_shader_source = LoadShaderSource("../../assets/shaders/chapter02/use_uniform.fs.glsl");
     const GLchar* fragment_shader_source_array[] = { fragment_shader_source.c_str() };
     glShaderSource(fragment_shader, 1, fragment_shader_source_array, nullptr);
     glCompileShader(fragment_shader);
@@ -244,62 +302,63 @@ void LoadShaderFromSourceCode()
     glDetachShader(shader_program, fragment_shader);
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
-}
 
-void SaveShaderBinary()
-{
-    GLint format = 0;
-    glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &format);
-    if (format < 1)
+    // 使用着色器程序
+    glUseProgram(shader_program);
+
+    // 输出 属性 信息
+    GLint attribs_num = 0;
+    glGetProgramInterfaceiv(shader_program, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &attribs_num);
+    GLenum attribs_properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION };
+    std::cout << "Active attributes:" << std::endl;
+    for (int i = 0; i < attribs_num; ++i)
     {
-        std::cerr << "不支持二进制形式的着色器程序" << std::endl;
-        glDeleteProgram(shader_program);
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        exit(EXIT_FAILURE);
+        GLint results[3] = { 0, 0, 0 };
+        glGetProgramResourceiv(shader_program, GL_PROGRAM_INPUT, i, 3, attribs_properties, 3, nullptr, results);
+
+        GLint name_buffer_size = results[0] + 1;
+        char* name = new char[name_buffer_size];
+        glGetProgramResourceName(shader_program, GL_PROGRAM_INPUT, i, name_buffer_size, nullptr, name);
+        std::cout << "    location: " << results[2] << ", name: " << name << ", type: " << results[1] << std::endl;
+        delete[] name;
     }
 
-    GLint length = 0;
-    glGetProgramiv(shader_program, GL_PROGRAM_BINARY_LENGTH, &length);
-
-    std::vector<GLubyte> buffer(length);
-    glGetProgramBinary(shader_program, length, nullptr, &shader_format, buffer.data());
-
-    std::string binary_shader_file_path("../../assets/shaders/chapter0/basic.bin.glsl");
-    std::cout << "保存二进制着色器程序: " << binary_shader_file_path << ", 格式: " << shader_format << std::endl;
-
-    std::ofstream shader_file(binary_shader_file_path, std::ios::binary);
-    shader_file.write(reinterpret_cast<char*>(buffer.data()), length);
-    shader_file.close();
+    // 输出 uniform 变量信息
+    GLint uniforms_num = 0;
+    glGetProgramInterfaceiv(shader_program, GL_UNIFORM,GL_ACTIVE_RESOURCES, &uniforms_num);
+    GLenum uniforms_properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION };
+    std::cout << "Active uniforms:" << std::endl;
+    for (int i = 0; i < uniforms_num; ++i)
+    {
+        GLint results[4] = { 0, 0, 0 };
+        glGetProgramResourceiv(shader_program, GL_UNIFORM, i, 3, uniforms_properties, 3, nullptr, results);
+        GLint name_buffer_size = results[0] + 1;
+        char* name = new char[name_buffer_size];
+        glGetProgramResourceName(shader_program, GL_UNIFORM, i, name_buffer_size, nullptr, name);
+        std::cout << "    location: " << results[2] << ", name: " << name << ", type: " << results[1] << std::endl;
+        delete[] name;
+    }
 }
 
-void LoadShaderFromBinary()
+void Update()
 {
-    shader_program = glCreateProgram();
-    if (shader_program == 0)
+    // 更新旋转角度
+    float current_time = static_cast<float>(glfwGetTime());
+    float delta_time = current_time - last_time;
+    last_time = current_time;
+    angle += 180.0f * delta_time;
+    if (angle > 360.0f)
     {
-        std::cerr << "创建 二进制 着色器程序 失败" << std::endl;
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        exit(EXIT_FAILURE);
+        angle -= 360.0f;
     }
 
-    std::ifstream binary_shader_file("../../assets/shaders/chapter0/basic.bin.glsl", std::ios::binary);
-    std::istreambuf_iterator<char> start_it(binary_shader_file);
-    std::istreambuf_iterator<char> end_it;
-    std::vector<char> buffer(start_it, end_it);
-    binary_shader_file.close();
-    glProgramBinary(shader_program, shader_format, buffer.data(), buffer.size());
+    // 计算变换矩阵
+    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
 
-    GLint status = 0;
-    glGetProgramiv(shader_program, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE)
+    // 更新着色器中的 uniform
+    GLint location = glGetUniformLocation(shader_program, "u_model");
+    if (location >= 0)
     {
-        std::cerr << "链接 二进制 着色器程序 失败" << std::endl;
-        std::cerr << GetProgramInfoLog(shader_program) << std::endl;
-        glDeleteProgram(shader_program);
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        exit(EXIT_FAILURE);
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(rotation_matrix));
     }
 }

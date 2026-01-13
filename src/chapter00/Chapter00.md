@@ -1,4 +1,4 @@
-﻿# Chapter0 着色器的加载、编译和保存
+﻿# Chapter00 着色器的加载、编译和保存
 
 [返回](../../README.md)
 
@@ -44,7 +44,7 @@ for (int i = 0; i < extensions; ++i)
 2. 通过 `glShaderSource` 将着色器源码传递给 OpenGL，案例如下:
 
 ``` C++
-std::string vertex_shader_source = LoadShaderSource("../../assets/shaders/chapter0/basic.vs.glsl");
+std::string vertex_shader_source = LoadShaderSource("../../assets/shaders/chapter00/basic.vs.glsl");
 const GLchar* vertex_shader_source_array[] = { vertex_shader_source.c_str() };
 glShaderSource(vertex_shader, 1, vertex_shader_source_array, nullptr);
 ```
@@ -164,7 +164,7 @@ GLenum shader_format = 0;
 std::vector<GLubyte> buffer(length);
 glGetProgramBinary(shader_program, length, nullptr, &shader_format, buffer.data());
 
-std::string binary_shader_file_path("../../assets/shaders/chapter0/basic.bin.glsl");
+std::string binary_shader_file_path("../../assets/shaders/chapter00/basic.bin.glsl");
 std::cout << "保存二进制着色器程序: " << binary_shader_file_path << ", 格式: " << shader_format << std::endl;
 
 std::ofstream shader_file(binary_shader_file_path, std::ios::binary);
@@ -190,7 +190,7 @@ void LoadShaderFromBinary()
         exit(EXIT_FAILURE);
     }
 
-    std::ifstream binary_shader_file("../../assets/shaders/chapter0/basic.bin.glsl", std::ios::binary);
+    std::ifstream binary_shader_file("../../assets/shaders/chapter00/basic.bin.glsl", std::ios::binary);
     std::istreambuf_iterator<char> start_it(binary_shader_file);
     std::istreambuf_iterator<char> end_it;
     std::vector<char> buffer(start_it, end_it);

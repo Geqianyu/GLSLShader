@@ -18,5 +18,4 @@ void main()
     float dy = uv.y - 0.5;
     float dist = sqrt(dx * dx + dy * dy);
     fragment_color = mix(u_inner_color, u_outer_color, smoothstep(u_inner_radius, u_outer_radius, dist));
-    // fragment_color = vec4(uv, 0.0, 1.0);
 }
