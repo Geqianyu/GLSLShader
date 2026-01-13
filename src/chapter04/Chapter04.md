@@ -37,4 +37,6 @@ glGetActiveUniformsiv(shader_program, 4, unifrom_indices, GL_UNIFORM_OFFSET, uni
 
 非实例的内容查看 [Chapter03 使用 uniform block 和 uniform buffer object](../chapter03/Chapter03.md)
 
+关于 uniform layout 的相关内容可以查看 [OpenGL 官方文档](http://www.opengl.org)
+
 [返回](../../README.md)
