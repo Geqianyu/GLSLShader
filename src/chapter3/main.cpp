@@ -17,8 +17,9 @@ GLuint vao = 0;
 GLuint vertex_shader = 0;
 GLuint fragment_shader = 0;
 GLuint shader_program = 0;
-float last_time = 0.0f;
-float angle = 0.0f;
+GLuint ubo = 0;
+GLubyte* uniform_block_buffer = nullptr;
+GLint uniform_offsets[] = { 0, 0, 0, 0 };
 
 std::string LoadShaderSource(const std::filesystem::path shader_file_path);
 std::string GetShaderInfoLog(GLuint shader);
@@ -26,7 +27,7 @@ std::string GetProgramInfoLog(GLuint program);
 
 void InitVertexData();
 void LoadShaderFromSourceCode();
-void Update();
+void SetUniformBlock();
 
 int main()
 {
@@ -44,7 +45,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    window = glfwCreateWindow(800, 600, "Chapter2", nullptr, nullptr);
+    window = glfwCreateWindow(800, 600, "Chapter3", nullptr, nullptr);
     if (!window)
     {
         std::cerr << "创建窗口失败" << std::endl;
@@ -92,23 +93,26 @@ int main()
     // 设置背景颜色
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
+    // 启动混合
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     // 初始化几何数据
     InitVertexData();
 
     // 从着色器源代码加载和编译着色器
     LoadShaderFromSourceCode();
 
-    last_time = static_cast<float>(glfwGetTime());
+    // 设置 uniform block
+    SetUniformBlock();
 
     // 渲染循环
     while (!glfwWindowShouldClose(window))
     {
-        Update();
-
         glClear(GL_COLOR_BUFFER_BIT);
 
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);
@@ -117,6 +121,9 @@ int main()
     }
 
     // 清理和退出
+    delete[] uniform_block_buffer;
+    uniform_block_buffer = nullptr;
+    glDeleteBuffers(1, &ubo);
     glDeleteProgram(shader_program);
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(2, vbo);
@@ -177,25 +184,31 @@ void InitVertexData()
     {
         -0.8f, -0.8f, 0.0f,
          0.8f, -0.8f, 0.0f,
-         0.0f,  0.8f, 0.0f,
+         0.8f,  0.8f, 0.0f,
+        -0.8f, -0.8f, 0.0f,
+         0.8f,  0.8f, 0.0f,
+        -0.8f,  0.8f, 0.0f
     };
-    float color_data[]
+    float uv_data[]
     {
-        1.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f
     };
 
     // 创建缓冲区
     glGenBuffers(2, vbo);
     GLuint position_vbo = vbo[0];
-    GLuint color_vbo = vbo[1];
+    GLuint uv_vbo = vbo[1];
 
     // 绑定缓冲区并传输数据
     glBindBuffer(GL_ARRAY_BUFFER, position_vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(position_data), position_data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, color_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(color_data), color_data, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, uv_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(uv_data), uv_data, GL_STATIC_DRAW);
 
     // 创建 VAO
     glGenVertexArrays(1, &vao);
@@ -210,8 +223,8 @@ void InitVertexData()
     glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
     glVertexAttribBinding(0, 0);
 
-    glBindVertexBuffer(1, color_vbo, 0, 3 * sizeof(float));
-    glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, 0);
+    glBindVertexBuffer(1, uv_vbo, 0, 2 * sizeof(float));
+    glVertexAttribFormat(1, 2, GL_FLOAT, GL_FALSE, 0);
     glVertexAttribBinding(1, 1);
 
     glBindVertexArray(0);
@@ -228,7 +241,7 @@ void LoadShaderFromSourceCode()
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
-    std::string vertex_shader_source = LoadShaderSource("../../assets/shaders/chapter2/use_uniform.vs.glsl");
+    std::string vertex_shader_source = LoadShaderSource("../../assets/shaders/chapter3/use_uniform_block.vs.glsl");
     const GLchar* vertex_shader_source_array[] = { vertex_shader_source.c_str() };
     glShaderSource(vertex_shader, 1, vertex_shader_source_array, nullptr);
     glCompileShader(vertex_shader);
@@ -254,7 +267,7 @@ void LoadShaderFromSourceCode()
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
-    std::string fragment_shader_source = LoadShaderSource("../../assets/shaders/chapter2/use_uniform.fs.glsl");
+    std::string fragment_shader_source = LoadShaderSource("../../assets/shaders/chapter3/use_uniform_block.fs.glsl");
     const GLchar* fragment_shader_source_array[] = { fragment_shader_source.c_str() };
     glShaderSource(fragment_shader, 1, fragment_shader_source_array, nullptr);
     glCompileShader(fragment_shader);
@@ -322,43 +335,57 @@ void LoadShaderFromSourceCode()
         std::cout << "    location: " << results[2] << ", name: " << name << ", type: " << results[1] << std::endl;
         delete[] name;
     }
+}
+
+void SetUniformBlock()
+{
+    // 获取 uniform block 索引
+    GLuint uniform_block_index = glGetUniformBlockIndex(shader_program, "BlobSetting");
+
+    // 为 uniform block 分配内存空间
+    GLint uniform_block_size = 0;
+    glGetActiveUniformBlockiv(shader_program, uniform_block_index, GL_UNIFORM_BLOCK_DATA_SIZE, &uniform_block_size);
+    uniform_block_buffer = new GLubyte[uniform_block_size];
+
+    // 查询 uniform 变量在 uniform block 中的偏移量
+    const GLchar* uniform_names[] = { "u_inner_color", "u_outer_color", "u_inner_radius", "u_outer_radius" };
+    GLuint unifrom_indices[4] = { 0, 0, 0, 0 };
+    glGetUniformIndices(shader_program, 4, uniform_names, unifrom_indices);
+    glGetActiveUniformsiv(shader_program, 4, unifrom_indices, GL_UNIFORM_OFFSET, uniform_offsets);
+
+    // 将数据拷贝靠内存空间
+    GLfloat inner_color[] = { 1.0f, 1.0f, 0.75f, 1.0f };
+    GLfloat outer_color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+    GLfloat inner_raidus = 0.25f;
+    GLfloat outer_radius = 0.45f;
+    memcpy_s(uniform_block_buffer + uniform_offsets[0], 4 * sizeof(float), inner_color, 4 * sizeof(float));
+    memcpy_s(uniform_block_buffer + uniform_offsets[1], 4 * sizeof(float), outer_color, 4 * sizeof(float));
+    memcpy_s(uniform_block_buffer + uniform_offsets[2], sizeof(float), &inner_raidus, sizeof(float));
+    memcpy_s(uniform_block_buffer + uniform_offsets[3], sizeof(float), &outer_radius, sizeof(float));
+
+    // 创建 uniform block buffer
+    glGenBuffers(1, &ubo);
+
+    // 将数据上传
+    glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+    glBufferData(GL_UNIFORM_BUFFER, uniform_block_size, uniform_block_buffer, GL_DYNAMIC_DRAW);
+
+    // 将 uniform block buffer 绑定到对应的 binding point
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, ubo);
 
     // 输出 uniform 变量信息
     GLint uniforms_num = 0;
-    glGetProgramInterfaceiv(shader_program, GL_UNIFORM,GL_ACTIVE_RESOURCES, &uniforms_num);
+    glGetProgramInterfaceiv(shader_program, GL_UNIFORM, GL_ACTIVE_RESOURCES, &uniforms_num);
     GLenum uniforms_properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION };
     std::cout << "Active uniforms:" << std::endl;
     for (int i = 0; i < uniforms_num; ++i)
     {
-        GLint results[4] = { 0, 0, 0 };
+        GLint results[3] = { 0, 0, 0 };
         glGetProgramResourceiv(shader_program, GL_UNIFORM, i, 3, uniforms_properties, 3, nullptr, results);
         GLint name_buffer_size = results[0] + 1;
         char* name = new char[name_buffer_size];
         glGetProgramResourceName(shader_program, GL_UNIFORM, i, name_buffer_size, nullptr, name);
         std::cout << "    location: " << results[2] << ", name: " << name << ", type: " << results[1] << std::endl;
         delete[] name;
-    }
-}
-
-void Update()
-{
-    // 更新旋转角度
-    float current_time = static_cast<float>(glfwGetTime());
-    float delta_time = current_time - last_time;
-    last_time = current_time;
-    angle += 180.0f * delta_time;
-    if (angle > 360.0f)
-    {
-        angle -= 360.0f;
-    }
-
-    // 计算变换矩阵
-    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
-
-    // 更新着色器中的 uniform
-    GLint location = glGetUniformLocation(shader_program, "u_model");
-    if (location >= 0)
-    {
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(rotation_matrix));
     }
 }
