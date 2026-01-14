@@ -16,4 +16,4 @@ cmake ..
 - [Chapter03 使用 uniform block 和 uniform buffer object](src/chapter03/Chapter03.md)
 - [Chapter04 使用 uniform block 实例 和 uniform buffer object](src/chapter04/Chapter04.md)
 - [Chapter05 使用程序管线](src/chapter05/Chapter05.md)
-- [Chapter06 创建着色器程序类](src/chapter05/Chapter06.md)
+- [Chapter06 创建着色器程序类](src/chapter06/Chapter06.md)
