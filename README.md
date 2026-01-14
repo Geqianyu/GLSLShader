@@ -15,3 +15,4 @@ cmake ..
 - [Chapter02 通过 uniform 传递数据](src/chapter02/Chapter02.md)
 - [Chapter03 使用 uniform block 和 uniform buffer object](src/chapter03/Chapter03.md)
 - [Chapter04 使用 uniform block 实例 和 uniform buffer object](src/chapter04/Chapter04.md)
+- [Chapter05 使用程序管线](src/chapter05/Chapter05.md)
