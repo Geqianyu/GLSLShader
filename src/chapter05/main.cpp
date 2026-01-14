@@ -358,7 +358,7 @@ void LoadShaderFromSourceCode()
     glProgramParameteri(shader_program_vertex, GL_PROGRAM_SEPARABLE, GL_TRUE);
     glProgramParameteri(shader_program_fragment1, GL_PROGRAM_SEPARABLE, GL_TRUE);
     glProgramParameteri(shader_program_fragment2, GL_PROGRAM_SEPARABLE, GL_TRUE);
-    
+
     // 链接着色器程序
     glAttachShader(shader_program_vertex, vertex_shader);
     glLinkProgram(shader_program_vertex);

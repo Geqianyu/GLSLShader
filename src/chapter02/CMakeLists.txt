@@ -1,6 +1,5 @@
 ﻿file(GLOB_RECURSE CHAPTER_02_FILES
     ${CMAKE_SOURCE_DIR}/vendor/glad/src/gl.c
-    ${CMAKE_SOURCE_DIR}/include/chapter02/*.h
     ${CMAKE_SOURCE_DIR}/src/chapter02/*.cpp)
 
 add_executable(Chapter02 ${CHAPTER_02_FILES})
