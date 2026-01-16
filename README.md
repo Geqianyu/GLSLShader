@@ -19,3 +19,4 @@ cmake ..
 - [Chapter06 创建着色器程序类](src/chapter06/Chapter06.md)
 - [Chapter07 Phong 模型的漫反射](src/chapter07/Chapter07.md)
 - [Chapter08 完整的 Phong 模型](src/chapter08/Chapter08.md)
+- [Chapter09 在 Shader 中调用函数](src/chapter09/Chapter09.md)
