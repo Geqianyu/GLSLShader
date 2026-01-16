@@ -18,3 +18,4 @@ cmake ..
 - [Chapter05 使用程序管线](src/chapter05/Chapter05.md)
 - [Chapter06 创建着色器程序类](src/chapter06/Chapter06.md)
 - [Chapter07 Phong 模型的漫反射](src/chapter07/Chapter07.md)
+- [Chapter08 完整的 Phong 模型](src/chapter08/Chapter08.md)
