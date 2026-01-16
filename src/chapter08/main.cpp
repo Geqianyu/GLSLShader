@@ -10,8 +10,6 @@
 #include <iostream>
 
 GLFWwindow* window = nullptr;
-GLuint vbo[2] = { 0, 0 };
-GLuint vao = 0;
 float last_time = 0.0f;
 float angle = 0.0f;
 glsl_shader::GLSLProgram program;
@@ -110,8 +108,6 @@ int main()
     // 清理和退出
     delete torus;
     torus = nullptr;
-    glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(2, vbo);
     glfwDestroyWindow(window);
     glfwTerminate();
 
