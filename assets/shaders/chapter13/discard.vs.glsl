@@ -2,11 +2,11 @@
 
 layout (location = 0) in vec3 vertex_position;
 layout (location = 1) in vec3 vertex_normal;
+layout (location = 2) in vec2 vertex_uv;
 
-layout (location = 0) out vec3 light_intensity;
-
-subroutine vec3 ShadeModelType(vec3 position, vec3 normal);
-subroutine uniform ShadeModelType shade_model;
+layout (location = 0) out vec3 front_color;
+layout (location = 1) out vec3 back_color;
+layout (location = 2) out vec2 uv;
 
 uniform struct LightInfo
 {
@@ -40,7 +40,6 @@ void GetViewSpace(out vec3 normal, out vec4 position)
     position = u_view_model_matrix * vec4(vertex_position,1.0);
 }
 
-subroutine(ShadeModelType)
 vec3 CalculatePhongModel(vec3 position, vec3 normal)
 {
   vec3 ambient_color = u_light.La * u_material.Ka;
@@ -60,21 +59,17 @@ vec3 CalculatePhongModel(vec3 position, vec3 normal)
   return ambient_color + diffuse_color + specular_color;
 }
 
-subroutine(ShadeModelType)
-vec3 CalculateDiffuseOnly(vec3 position, vec3 normal)
-{
-    vec3 s = normalize(u_light.position_in_view.xyz - position);
-    return u_light.Ld * u_material.Kd * max(dot(s, normal), 0.0);
-}
-
 void main()
 {
     vec3 view_normal;
     vec3 view_position;
-    
+
     GetViewSpace(view_normal, view_position);
 
-    light_intensity = shade_model(view_position, view_normal);
+    front_color = CalculatePhongModel(view_position, view_normal);
+    back_color = CalculatePhongModel(view_position, -view_normal);
+
+    uv = vertex_uv;
 
     gl_Position = u_mvp_matrix * vec4(vertex_position,1.0);
 }

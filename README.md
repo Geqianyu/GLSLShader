@@ -23,3 +23,4 @@ cmake ..
 - [Chapter10 双面渲染](src/chapter10/Chapter10.md)
 - [Chapter11 平面渲染](src/chapter11/Chapter11.md)
 - [Chapter12 使用子程序选择着色器功能](src/chapter12/Chapter12.md)
+- [Chapter13 丢弃面片](src/chapter13/Chapter13.md)
