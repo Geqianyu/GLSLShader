@@ -1,0 +1,10 @@
+﻿#version 460
+
+layout (location = 0) flat in vec3 light_intensity;
+
+layout (location = 0) out vec4 fragment_color;
+
+void main()
+{
+    fragment_color = vec4(light_intensity, 1.0);
+}

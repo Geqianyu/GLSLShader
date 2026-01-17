@@ -63,6 +63,9 @@ namespace glsl_shader
         void SetUniform(const char* name, int value);
         void SetUniform(const char* name, GLuint value);
 
+        GLuint GetSubroutineIndex(ShaderType shader_type, const char* name);
+        void SetSubroutineIndex(ShaderType shader_type, int count, GLuint* indices);
+
         void FindUniformLocations();
         void PrintActiveUniforms();
         void PrintActiveUniformBlocks();

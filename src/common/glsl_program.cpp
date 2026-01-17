@@ -291,6 +291,16 @@ namespace glsl_shader
         glUniform1ui(location, value);
     }
 
+    GLuint GLSLProgram::GetSubroutineIndex(ShaderType shader_type, const char* name)
+    {
+        return glGetSubroutineIndex(m_handle, static_cast<unsigned int>(shader_type), name);
+    }
+
+    void GLSLProgram::SetSubroutineIndex(ShaderType shader_type, int count, GLuint* indices)
+    {
+        glUniformSubroutinesuiv(static_cast<unsigned int>(shader_type), count, indices);
+    }
+
     void GLSLProgram::FindUniformLocations()
     {
         m_uniform_locations.clear();
