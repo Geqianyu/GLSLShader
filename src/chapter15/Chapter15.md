@@ -28,30 +28,8 @@ else
 
 这里根据光源位置的第四个分量判断光源是否为方向光，如果第四个分量为0则是方向光。
 
-## 14.1 创建 uniform 数组
+## 15.2 方向光渲染展示
 
-``` GLSL
-uniform struct LightInfo
-{
-    vec4 position_in_view;
-    vec3 La;
-    vec3 L;
-} u_lights[5];
-```
-
-先创建 **uniform** 结构体，在最后的变量声明后添加 `[5]` 表明这是一个数组，该数据存储5个变量。
-
-## 14.2 在 C++ 中设置单个光源的属性
-
-``` C++
-program.SetUniform("u_lights[0].L", glm::vec3(0.0f, 0.8f, 0.8f));
-program.SetUniform("u_lights[0].La", glm::vec3(0.0f, 0.2f, 0.2f));
-```
-
-利用 `u_lights[0]` 表示 **uniform** 数组中的第0个元素。
-
-## 14.3 多光源渲染展示
-
-![多光源渲染展示](./images/多光源渲染展示.png)
+![方向光渲染结果](./images/方向光渲染结果.png)
 
 [返回](../../README.md)
