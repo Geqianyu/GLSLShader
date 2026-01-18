@@ -25,3 +25,4 @@ cmake ..
 - [Chapter12 使用子程序选择着色器功能](src/chapter12/Chapter12.md)
 - [Chapter13 丢弃面片](src/chapter13/Chapter13.md)
 - [Chapter14 多光源渲染](src/chapter14/Chapter14.md)
+- [Chapter15 方向光渲染](src/chapter15/Chapter15.md)
