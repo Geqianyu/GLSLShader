@@ -58,6 +58,7 @@ F 项表示菲涅尔反射，即从光学平面表面反射的光的比例。菲
 此项对镜面高光的大小和形状有显著影响。
 对于此函数，有许多选择，并且近年来基于物理测量开发了几种。
 本章节使用图形学研究者 Trowbridge 和 Reitz 提出的一种常用函数 GGX:
+
 $$
 D(\mathbf{h})=\frac{\alpha^2}{\pi\left((\mathbf{n}\cdot\mathbf{h})^2(\alpha^2-1)+1\right)^2}
 $$
