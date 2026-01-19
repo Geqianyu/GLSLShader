@@ -56,4 +56,8 @@ fragment_color = vec4(color, 1.0);
 
 最后，根据雾因子 `fog_factor` 的值，将 `shade_color` 和 `u_fog.color` 混合在一起，结果用作片元颜色。
 
+## 模拟雾渲染展示
+
+![模拟雾渲染展示](./images/模拟雾渲染展示.gif)
+
 [返回](../../README.md)

@@ -78,4 +78,8 @@ vec3 CalculateBlinnPhongModel(vec3 position, vec3 normal)
 `spot_scale` 的值用于缩放光的强度，使光在圆锥中心最强，并在向边缘移动时逐渐减弱。
 最后，Blinn-Phong 反射模型按常规计算。
 
+## 聚光灯渲染展示
+
+![聚光灯渲染展示](./images/聚光灯渲染展示.gif)
+
 [返回](../../README.md)

@@ -6,8 +6,12 @@
 
 Blinn-Phong 反照模型中，镜面反射采用了 **半向量** : **h** = **s** + **v**。
 
-![blinn_phong反照模型镜面反射分量](./images/blinn_phong反照模型镜面反射分量.PNG)
+![blinn_phong反照模型镜面反射分量](./images/blinn_phong反照模型镜面反射分量.png)
 
 镜面反射的结果为: **Is** = **LsKs(h · n)^f**
+
+## Blinn-Phong 反照渲染展示
+
+![blinn_phong反照渲染展示](./images/blinn_phong反照渲染展示.gif)
 
 [返回](../../README.md)
