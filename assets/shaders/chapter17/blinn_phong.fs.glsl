@@ -20,7 +20,7 @@ uniform struct MaterialInfo
     float shininess;
 } u_material;
 
-vec3 CalculatePhongModel(vec3 position, vec3 normal)
+vec3 CalculateBlinnPhongModel(vec3 position, vec3 normal)
 {
     vec3 ambient_color = u_light.La * u_material.Ka;
 
@@ -32,13 +32,13 @@ vec3 CalculatePhongModel(vec3 position, vec3 normal)
     if(s_dot_n > 0.0)
     {
         vec3 v = normalize(-position.xyz);
-        vec3 r = reflect(-s, normal);
-        specular_color = u_material.Ks * pow(max(dot(r, v), 0.0), u_material.shininess);
+        vec3 h = normalize(s + v);
+        specular_color = u_material.Ks * pow(max(dot(h, normal), 0.0), u_material.shininess);
     }
     return ambient_color + u_light.L * (diffuse_color + specular_color);
 }
 
 void main()
 {
-    fragment_color = vec4(CalculatePhongModel(position_in_view, normalize(normal_in_view)), 1.0);
+    fragment_color = vec4(CalculateBlinnPhongModel(position_in_view, normalize(normal_in_view)), 1.0);
 }
