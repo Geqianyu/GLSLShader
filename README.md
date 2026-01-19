@@ -30,3 +30,4 @@ cmake ..
 - [Chapter17 Blinn-Phong 反照模型](src/chapter17/Chapter17.md)
 - [Chapter18 模拟聚光灯](src/chapter18/Chapter18.md)
 - [Chapter19 卡通着色特效](src/chapter19/Chapter19.md)
+- [Chapter20 模拟雾](src/chapter20/Chapter20.md)
