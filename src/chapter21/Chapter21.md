@@ -11,7 +11,7 @@
 
 ## 21.1 BRDF 介绍
 
-本章节中 **BRDF** 分为两个部分: 漫反射BRDF 和 镜面反射BRDF，$f(\mathbf{l}, \mathbf{v}) = f_d + f_s$
+本章节中 **BRDF** 分为两个部分: 漫反射BRDF 和 镜面反射BRDF， $f(\mathbf{l}, \mathbf{v}) = f_d + f_s$
 
 ### 21.1.1 漫反射 BRDF
 
