@@ -70,7 +70,7 @@ $$
 镜面反射 BRDF 中的 G 项是几何函数，描述了具有给定法线的微表面从光照方向(l)和观察方向(v)均可见的概率。
 它的取值是介于 0 到 1 之间的标量。它对于能量守恒至关重要。本章节将使用 G 模型: $G(\mathbf{l}, \mathbf{v}, \mathbf{h}) = G_1(\mathbf{l})\, G_1(\mathbf{v})$
 
-其中$G_1(\mathbf{v})=\frac{\mathbf{n}\cdot\mathbf{v}}{(\mathbf{n}\cdot\mathbf{v})(1-k)+k}$
+其中 $G_1(\mathbf{v})=\frac{\mathbf{n}\cdot\mathbf{v}}{(\mathbf{n}\cdot\mathbf{v})(1-k)+k}$
 
 常数 k 是与粗糙度成正比的值: $k=\frac{(r+1)^2}{8}$
 
