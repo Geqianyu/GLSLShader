@@ -74,7 +74,7 @@ $$
 
 常数 k 是与粗糙度成正比的值: $k=\frac{(r+1)^2}{8}$
 
-**注:** 一些场景的 PBR 资料可以从 [这里](https://blog.selfshadow.com/publications/s2013-shading-course/​) 找到
+**注:** 一些场景的 PBR 资料可以从 [这里](https://blog.selfshadow.com/publications/s2013-shading-course/?) 找到
 
 ## 21.2 PBR渲染展示
 
