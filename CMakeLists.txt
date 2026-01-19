@@ -32,6 +32,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/chapter17)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/chapter18)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/chapter19)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/chapter20)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/chapter21)
 
 if (MSVC)
     add_compile_options(/utf-8)

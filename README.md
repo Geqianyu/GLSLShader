@@ -31,3 +31,4 @@ cmake ..
 - [Chapter18 模拟聚光灯](src/chapter18/Chapter18.md)
 - [Chapter19 卡通着色特效](src/chapter19/Chapter19.md)
 - [Chapter20 模拟雾](src/chapter20/Chapter20.md)
+- [Chapter21 基于物理的渲染](src/chapter21/Chapter21.md)
