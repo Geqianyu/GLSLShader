@@ -75,10 +75,8 @@ $$
 
 **注:** 一些场景的 PBR 资料可以从 [这里](http:/​/​blog.​selfshadow.com/​publications/​s2013-​shading-​course/​) 找到
 
+## 21.2 PBR渲染展示
 
-
-## 模拟雾渲染展示
-
-![模拟雾渲染展示](./images/模拟雾渲染展示.gif)
+![PBR渲染展示](./images/PBR渲染展示.gif)
 
 [返回](../../README.md)
