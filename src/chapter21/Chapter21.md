@@ -2,7 +2,7 @@
 
 [返回](../../README.md)
 
-本章节使用点光源实现基于物理的渲染(PBR)。$L_o(\mathbf{v}) = \int_{\Omega} f(\mathbf{l}, \mathbf{v})\, L_i(\mathbf{l})\, (\mathbf{n}\cdot \mathbf{l})\, d\omega_i$
+本章节使用点光源实现基于物理的渲染(PBR)。 $L_o(\mathbf{v}) = \int_{\Omega} f(\mathbf{l}, \mathbf{v})\, L_i(\mathbf{l})\, (\mathbf{n}\cdot \mathbf{l})\, d\omega_i$
 
 这个积分表达的是：
 - 表面沿着观察方向 **v** 朝向观察者发出的出射辐亮度(**Lo**)，等于对 **BRDF**(**f**)与入射辐亮度(**Li**)的乘积做积分(可以把积分理解成一种 带权求和)。
