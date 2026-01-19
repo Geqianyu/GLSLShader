@@ -29,3 +29,4 @@ cmake ..
 - [Chapter16 使用片元着色器进行光照计算](src/chapter16/Chapter16.md)
 - [Chapter17 Blinn-Phong 反照模型](src/chapter17/Chapter17.md)
 - [Chapter18 模拟聚光灯](src/chapter18/Chapter18.md)
+- [Chapter19 卡通着色特效](src/chapter19/Chapter19.md)
