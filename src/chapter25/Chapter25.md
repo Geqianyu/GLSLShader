@@ -30,28 +30,22 @@ z 轴由法向量(n)定义，x 轴由一个称为切线向量(t)的向量定义�
 在相机坐标中定义的点 P 可以通过以下方式转换到切线空间
 
 $$
-\left[
-\begin{array}{c}
+\begin{bmatrix}
 S_x\\
 S_y\\
 S_z
-\end{array}
-\right]
+\end{bmatrix}
 =
-\left[
-\begin{array}{ccc}
+\begin{bmatrix}
 t_x & t_y & t_z\\
 b_x & b_y & b_z\\
 n_x & n_y & n_z
-\end{array}
-\right]
-\left[
-\begin{array}{c}
+\end{bmatrix}
+\begin{bmatrix}
 P_x\\
 P_y\\
 P_z
-\end{array}
-\right]
+\end{bmatrix}
 $$
 
 在前面的方程中，S 是切线空间中的点，P 是相机坐标中的点。
