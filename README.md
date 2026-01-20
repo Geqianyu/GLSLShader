@@ -32,3 +32,4 @@ cmake ..
 - [Chapter19 卡通着色特效](src/chapter19/Chapter19.md)
 - [Chapter20 模拟雾](src/chapter20/Chapter20.md)
 - [Chapter21 基于物理的渲染](src/chapter21/Chapter21.md)
+- [Chapter22 应用 2D 纹理](src/chapter22/Chapter22.md)
