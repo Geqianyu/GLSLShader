@@ -62,6 +62,6 @@ layout (binding = 0) uniform sampler2D u_diffuse_texture;
 
 ## 22.4 纹理渲染展示
 
-![PBR渲染展示](./images/PBR渲染展示.gif)
+![纹理渲染展示](./images/纹理渲染展示.png)
 
 [返回](../../README.md)

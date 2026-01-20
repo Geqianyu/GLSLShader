@@ -44,6 +44,6 @@ vec3 color = mix(brick_color.rgb, moss_color.rgb, moss_color.a);
 
 ## 23.4 多张纹理渲染展示
 
-![PBR渲染展示](./images/PBR渲染展示.gif)
+![多张纹理渲染展示](./images/多张纹理渲染展示.png)
 
 [返回](../../README.md)

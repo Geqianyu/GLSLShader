@@ -34,6 +34,6 @@ else
 
 ## 24.2 应用 Alpha 通道渲染展示
 
-![PBR渲染展示](./images/PBR渲染展示.gif)
+![应用Alpha通道渲染展示](./images/应用Alpha通道渲染展示.gif)
 
 [返回](../../README.md)
