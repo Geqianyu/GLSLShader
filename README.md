@@ -36,3 +36,4 @@ cmake ..
 - [Chapter23 应用多张纹理](src/chapter23/Chapter23.md)
 - [Chapter24 使用 Alpha 贴图舍弃像素](src/chapter24/Chapter24.md)
 - [Chapter25 使用法线贴图](src/chapter25/Chapter25.md)
+- [Chapter26 使用视差贴图](src/chapter26/Chapter26.md)
