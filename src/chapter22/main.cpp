@@ -162,6 +162,7 @@ void TerminateGeometry()
 void InitTextures()
 {
     texture = glsl_shader::Texture::LoadTexture("../../assets/textures/brick1.jpg");
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
 }

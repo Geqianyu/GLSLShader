@@ -60,7 +60,7 @@ layout (binding = 0) uniform sampler2D u_diffuse_texture;
 
 采样器的关键字是 `sampler2D`，这是一个 2D 的采样器。
 
-## 23.4 纹理渲染展示
+## 22.4 纹理渲染展示
 
 ![PBR渲染展示](./images/PBR渲染展示.gif)
 

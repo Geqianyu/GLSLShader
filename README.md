@@ -33,3 +33,4 @@ cmake ..
 - [Chapter20 模拟雾](src/chapter20/Chapter20.md)
 - [Chapter21 基于物理的渲染](src/chapter21/Chapter21.md)
 - [Chapter22 应用 2D 纹理](src/chapter22/Chapter22.md)
+- [Chapter23 应用多张纹理](src/chapter23/Chapter23.md)
