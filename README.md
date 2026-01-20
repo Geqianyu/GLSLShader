@@ -34,3 +34,4 @@ cmake ..
 - [Chapter21 基于物理的渲染](src/chapter21/Chapter21.md)
 - [Chapter22 应用 2D 纹理](src/chapter22/Chapter22.md)
 - [Chapter23 应用多张纹理](src/chapter23/Chapter23.md)
+- [Chapter24 使用 Alpha 贴图舍弃像素](src/chapter24/Chapter24.md)
