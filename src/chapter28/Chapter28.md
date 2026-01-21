@@ -1,4 +1,4 @@
-﻿# Chapter28 立方体贴图(CubeMap)
+﻿# Chapter28 立方体贴图反射(CubeMap)
 
 [返回](../../README.md)
 
@@ -91,7 +91,7 @@ vec3 cube_map_color = texture(u_sky_box_cube_map, reflect_direction).rgb;
 
 这里通过相机的世界空间坐标和顶点的世界空间坐标得到视线方向，然后利用顶点法线计算出反射向量，利用反射向量对立方体贴图进行采样得到镜面反射的颜色。
 
-## 28.5 立方体贴图渲染展示
+## 28.5 立方体贴图反射渲染展示
 
 ![陡峭视差贴图渲染展示](./images/陡峭视差贴图渲染展示.png)
 

@@ -12,6 +12,7 @@ namespace glsl_shader
     public:
         static GLuint LoadTexture(const std::string& filename);
         static GLuint LoadCubeMap(const std::string& base_name, const std::string& extension = ".png");
+        static GLuint LoadHdrCubeMap(const std::string& base_name);
     };
 }
 
