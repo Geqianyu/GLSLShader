@@ -93,6 +93,6 @@ vec3 cube_map_color = texture(u_sky_box_cube_map, reflect_direction).rgb;
 
 ## 28.5 立方体贴图反射渲染展示
 
-![陡峭视差贴图渲染展示](./images/陡峭视差贴图渲染展示.png)
+![立方体贴图反射](./images/立方体贴图反射.gif)
 
 [返回](../../README.md)
