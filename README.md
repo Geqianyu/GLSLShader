@@ -38,3 +38,4 @@ cmake ..
 - [Chapter25 使用法线贴图](src/chapter25/Chapter25.md)
 - [Chapter26 使用视差贴图](src/chapter26/Chapter26.md)
 - [Chapter27 使用视差贴图自阴影](src/chapter27/Chapter27.md)
+- [Chapter28 立方体贴图(CubeMap)](src/chapter28/Chapter28.md)
