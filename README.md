@@ -39,4 +39,4 @@ cmake ..
 - [Chapter26 使用视差贴图](src/chapter26/Chapter26.md)
 - [Chapter27 使用视差贴图自阴影](src/chapter27/Chapter27.md)
 - [Chapter28 立方体贴图反射(CubeMap)](src/chapter28/Chapter28.md)
-- [Chapter28 立方体贴图折射(CubeMap)](src/chapter29/Chapter29.md)
+- [Chapter29 立方体贴图折射(CubeMap)](src/chapter29/Chapter29.md)
