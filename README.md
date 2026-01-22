@@ -41,3 +41,4 @@ cmake ..
 - [Chapter28 立方体贴图反射(CubeMap)](src/chapter28/Chapter28.md)
 - [Chapter29 立方体贴图折射(CubeMap)](src/chapter29/Chapter29.md)
 - [Chapter30 应用投影纹理](src/chapter30/Chapter30.md)
+- [Chapter31 将场景渲染到纹理](src/chapter31/Chapter31.md)
