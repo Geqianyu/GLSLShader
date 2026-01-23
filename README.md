@@ -42,3 +42,5 @@ cmake ..
 - [Chapter29 立方体贴图折射(CubeMap)](src/chapter29/Chapter29.md)
 - [Chapter30 应用投影纹理](src/chapter30/Chapter30.md)
 - [Chapter31 将场景渲染到纹理](src/chapter31/Chapter31.md)
+- [Chapter32 采样器对象](src/chapter32/Chapter32.md)
+- [Chapter33 基于图像的光照(IBL)](src/chapter33/Chapter33.md)
