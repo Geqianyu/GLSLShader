@@ -87,6 +87,6 @@ glBindSampler(0, samplers[1]);
 
 ## 32.4 使用采样器对象渲染展示
 
-![渲染到纹理](./images/渲染到纹理.gif)
+![采样器对象渲染](./images/采样器对象渲染.png)
 
 [返回](../../README.md)
