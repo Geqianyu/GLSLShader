@@ -44,4 +44,5 @@ cmake ..
 - [Chapter31 将场景渲染到纹理](src/chapter31/Chapter31.md)
 - [Chapter32 采样器对象](src/chapter32/Chapter32.md)
 - [Chapter33 基于图像的光照(IBL)](src/chapter33/Chapter33.md)
-- [Chapter34 边缘检测](src/chapter33/Chapter34.md)
+- [Chapter34 边缘检测](src/chapter34/Chapter34.md)
+- [Chapter35 高斯模糊](src/chapter35/Chapter35.md)
