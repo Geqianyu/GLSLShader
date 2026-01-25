@@ -46,3 +46,4 @@ cmake ..
 - [Chapter33 基于图像的光照(IBL)](src/chapter33/Chapter33.md)
 - [Chapter34 边缘检测](src/chapter34/Chapter34.md)
 - [Chapter35 高斯模糊](src/chapter35/Chapter35.md)
+- [Chapter36 具有色调映射(tone map)的HDR照明](src/chapter36/Chapter36.md)
