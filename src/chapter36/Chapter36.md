@@ -33,6 +33,7 @@
 
 ```math
 \overline{L}_w = \exp\left(\frac{1}{N}\sum_{x,y}\ln(0.0001 + L_w(x,y))\right)
+```
 
 **Lw(x, y)** 是像素 (x, y) 的亮度。
 包含 0.0001 项是为了避免对黑色像素取零的对数。
