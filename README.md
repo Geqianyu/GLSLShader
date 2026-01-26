@@ -48,3 +48,4 @@ cmake ..
 - [Chapter35 高斯模糊](src/chapter35/Chapter35.md)
 - [Chapter36 具有色调映射(tone map)的HDR照明](src/chapter36/Chapter36.md)
 - [Chapter37 泛光特效(Bloom)](src/chapter37/Chapter37.md)
+- [Chapter38 Gamma校正](src/chapter38/Chapter38.md)
