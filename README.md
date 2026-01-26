@@ -47,3 +47,4 @@ cmake ..
 - [Chapter34 边缘检测](src/chapter34/Chapter34.md)
 - [Chapter35 高斯模糊](src/chapter35/Chapter35.md)
 - [Chapter36 具有色调映射(tone map)的HDR照明](src/chapter36/Chapter36.md)
+- [Chapter37 泛光特效(Bloom)](src/chapter37/Chapter37.md)
