@@ -135,7 +135,7 @@ int main()
     for (int i = 0; i < 5; i++)
     {
         std::stringstream uniform_name;
-        uniform_name << "u_weight[" << i << "]";
+        uniform_name << "u_weights[" << i << "]";
         float val = weights[i] / sum;
         program.SetUniform(uniform_name.str().c_str(), val);
     }
@@ -221,8 +221,8 @@ void InitGeometry()
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, full_screen_quad_uv_vbo);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
 }
