@@ -50,3 +50,4 @@ cmake ..
 - [Chapter37 泛光特效(Bloom)](src/chapter37/Chapter37.md)
 - [Chapter38 Gamma校正](src/chapter38/Chapter38.md)
 - [Chapter39 多重采样抗锯齿(MSAA)](src/chapter39/Chapter39.md)
+- [Chapter40 延迟渲染](src/chapter40/Chapter40.md)
