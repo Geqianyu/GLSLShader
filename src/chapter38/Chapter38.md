@@ -31,6 +31,6 @@ I = \left(I^{\frac{1}{\gamma}}\right)^{\gamma}
 
 ## 38.1 Gamma校正展示
 
-![Gamma校正展示](./images/Gamma校正展示.png)
+![Gamma校正展示](./images/Gamma校正展示.gif)
 
 [返回](../../README.md)
