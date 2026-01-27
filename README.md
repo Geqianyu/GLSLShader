@@ -51,3 +51,4 @@ cmake ..
 - [Chapter38 Gamma校正](src/chapter38/Chapter38.md)
 - [Chapter39 多重采样抗锯齿(MSAA)](src/chapter39/Chapter39.md)
 - [Chapter40 延迟渲染](src/chapter40/Chapter40.md)
+- [Chapter41 屏幕空间环境光遮蔽(SSAO)](src/chapter41/Chapter41.md)
