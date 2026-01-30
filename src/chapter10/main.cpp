@@ -16,7 +16,6 @@ glsl_shader::GLSLProgram program;
 glsl_shader::Teapot* teapot = nullptr;
 
 void LoadShaderFromSourceCode();
-void InitTeapot();
 void Update();
 
 int main()

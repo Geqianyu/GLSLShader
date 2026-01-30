@@ -17,7 +17,6 @@ glsl_shader::GLSLProgram program;
 std::unique_ptr<glsl_shader::Plane> plane;
 std::unique_ptr<glsl_shader::Torus> torus;
 std::unique_ptr<glsl_shader::Teapot> teapot;
-glm::vec3 camera_position = glm::vec3(0.0f);
 glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 glm::mat4 model = glm::mat4(1.0f);
 glm::mat4 view = glm::mat4(1.0f);

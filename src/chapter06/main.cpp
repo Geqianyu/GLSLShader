@@ -9,10 +9,6 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include <iostream>
-#include <string>
-#include <filesystem>
-#include <fstream>
-#include <sstream>
 
 GLFWwindow* window = nullptr;
 GLuint vbo[2] = { 0, 0 };

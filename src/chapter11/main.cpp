@@ -17,7 +17,6 @@ glsl_shader::GLSLProgram program;
 std::unique_ptr<glsl_shader::ObjMesh> obj_mesh;
 
 void LoadShaderFromSourceCode();
-void InitTeapot();
 void Update();
 
 int main()

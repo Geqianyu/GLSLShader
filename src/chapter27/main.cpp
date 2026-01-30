@@ -14,7 +14,6 @@
 GLFWwindow* window = nullptr;
 glsl_shader::GLSLProgram program;
 std::unique_ptr<glsl_shader::Plane> plane;
-glm::vec4 light_position = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 glm::mat4 view = glm::lookAt(glm::vec3(-1.0f, 0.0f, 8.0f), glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 glm::mat4 projection = glm::perspective(glm::radians(35.0f), 4.0f / 3.0f, 0.3f, 100.0f);
 GLuint color_texture = 0;
