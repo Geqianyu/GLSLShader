@@ -53,3 +53,5 @@ cmake ..
 - [Chapter40 延迟渲染](src/chapter40/Chapter40.md)
 - [Chapter41 屏幕空间环境光遮蔽(SSAO)](src/chapter41/Chapter41.md)
 - [Chapter42 顺序无关的透明物体渲染](src/chapter42/Chapter42.md)
+- [Chapter43 使用几何着色器的点精灵](src/chapter43/Chapter43.md)
+- [Chapter44 在带阴影的网格上绘制线框](src/chapter44/Chapter44.md)
