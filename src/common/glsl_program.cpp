@@ -12,9 +12,9 @@ namespace glsl_shader
     static std::unordered_map<std::string, ShaderType> s_extension_map
     {
         { ".vs.glsl", ShaderType::Vertex },
-        { ".fs.glsl", ShaderType::Fragment},
+        { ".fs.glsl", ShaderType::Fragment },
         { ".gs.glsl", ShaderType::Geometry },
-        { ".tcs.glsl", ShaderType::TessControl},
+        { ".tcs.glsl", ShaderType::TessControl },
         { ".tes.glsl", ShaderType::TessEvaluation },
         { ".cs.glsl", ShaderType::Compute},
     };
