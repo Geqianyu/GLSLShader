@@ -56,3 +56,4 @@ cmake ..
 - [Chapter43 使用几何着色器的点精灵](src/chapter43/Chapter43.md)
 - [Chapter44 在带阴影的网格上绘制线框](src/chapter44/Chapter44.md)
 - [Chapter45 使用几何着色器绘制轮廓线](src/chapter45/Chapter45.md)
+- [Chapter46 细分曲线](src/chapter46/Chapter46.md)
