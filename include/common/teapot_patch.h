@@ -17,7 +17,7 @@ namespace glsl_shader
     private:
         void GeneratePatch(std::vector<GLfloat>& points);
         void BuildPatchReflect(int patch_count, std::vector<GLfloat>& points, int& index, bool reflect_x, bool reflect_y);
-        void BuildPatch(glm::vec3& patch[][4], std::vector<GLfloat>& points, int& index, const glm::vec3& reflect);
+        void BuildPatch(glm::vec3 patch[][4], std::vector<GLfloat>& points, int& index, const glm::mat3 reflect);
         void GetPatch(int patch_count, glm::vec3 patch[][4], bool reverse_v);
         void Init(std::vector<GLfloat>& points);
 

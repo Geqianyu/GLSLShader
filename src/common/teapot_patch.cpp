@@ -121,7 +121,7 @@ namespace glsl_shader
         }
     }
 
-    void TeapotPatch::BuildPatch(glm::vec3& patch[][4], std::vector<GLfloat>& points, int& index, const glm::vec3& reflect)
+    void TeapotPatch::BuildPatch(glm::vec3 patch[][4], std::vector<GLfloat>& points, int& index, const glm::mat3 reflect)
     {
         for (int i = 0; i < 4; ++i)
         {

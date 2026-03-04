@@ -58,3 +58,4 @@ cmake ..
 - [Chapter45 使用几何着色器绘制轮廓线](src/chapter45/Chapter45.md)
 - [Chapter46 细分曲线](src/chapter46/Chapter46.md)
 - [Chapter47 细分 2D 四边形](src/chapter47/Chapter47.md)
+- [Chapter48 细分 3D 曲面](src/chapter48/Chapter48.md)

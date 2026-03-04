@@ -6,28 +6,33 @@
 
 #include "common/glsl_program.h"
 
+#include "common/teapot_patch.h"
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <memory>
 
 GLFWwindow* window = nullptr;
+std::unique_ptr<glsl_shader::TeapotPatch> teapot_patch;
 glsl_shader::GLSLProgram program;
 glm::mat4 viewport = glm::mat4
                     (
                         glm::vec4(400.0f, 0.0f, 0.0f, 0.0f),
-                        glm::vec4(0.0f, 600.0f, 0.0f, 0.0f),
+                        glm::vec4(0.0f, 300.0f, 0.0f, 0.0f),
                         glm::vec4(0.0f, 0.0f, 1.0f, 0.0f),
                         glm::vec4(400.0f, 300.0f, 0.0f, 1.0f)
                     );
 glm::mat4 model = glm::mat4(1.0f);
 glm::mat4 view = glm::mat4(1.0f);
-glm::mat4 projection = glm::ortho(-0.4f * 3.5f, 0.4f * 3.5f, -0.3f * 3.5f, 0.3f * 3.5f, 0.1f, 100.0f);
-GLuint vao = 0;
-GLuint vbo = 0;
+glm::mat4 projection = glm::perspective(glm::radians(60.0f), 4.0f / 3.0f, 0.3f, 100.0f);
+float angle = glm::pi<float>() / 3.0f;
+float last_time = 0.0f;
 
 void LoadShaderFromSourceCode();
 void InitGeometry();
 void TerminateGeometry();
+void Update();
 
 int main()
 {
@@ -45,7 +50,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    window = glfwCreateWindow(800, 600, "Chapter47", nullptr, nullptr);
+    window = glfwCreateWindow(800, 600, "Chapter48", nullptr, nullptr);
     if (!window)
     {
         std::cerr << "创建窗口失败" << std::endl;
@@ -108,18 +113,25 @@ int main()
     // 渲染循环
     while (!glfwWindowShouldClose(window))
     {
+        Update();
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glm::vec3 camera_position(0.0f, 0.0f, 1.5f);
+        glm::vec3 camera_position(4.25f * glm::cos(angle), 3.0f, 4.25f * glm::sin(angle));
         view = glm::lookAt(camera_position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+        model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+        program.Use();
 
         glm::mat4 mv = view * model;
-        program.Use();
+        program.SetUniform("u_model_view_matrix", mv);
+        program.SetUniform("u_normal_matrix", glm::mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2])));
         program.SetUniform("u_mvp_matrix", projection * mv);
         program.SetUniform("u_viewport_matrix", viewport);
 
-        glBindVertexArray(vao);
-        glDrawArrays(GL_PATCHES, 0, 4);
+        teapot_patch->Render();
 
         glfwSwapBuffers(window);
 
@@ -137,56 +149,46 @@ int main()
 void LoadShaderFromSourceCode()
 {
     // 创建顶点着色器
-    program.CompileShader("../../assets/shaders/chapter47/tessellating_2d_quad.vs.glsl");
-    program.CompileShader("../../assets/shaders/chapter47/tessellating_2d_quad.tcs.glsl");
-    program.CompileShader("../../assets/shaders/chapter47/tessellating_2d_quad.tes.glsl");
-    program.CompileShader("../../assets/shaders/chapter47/tessellating_2d_quad.gs.glsl");
-    program.CompileShader("../../assets/shaders/chapter47/tessellating_2d_quad.fs.glsl");
+    program.CompileShader("../../assets/shaders/chapter48/tessellating_teapot.vs.glsl");
+    program.CompileShader("../../assets/shaders/chapter48/tessellating_teapot.tcs.glsl");
+    program.CompileShader("../../assets/shaders/chapter48/tessellating_teapot.tes.glsl");
+    program.CompileShader("../../assets/shaders/chapter48/tessellating_teapot.gs.glsl");
+    program.CompileShader("../../assets/shaders/chapter48/tessellating_teapot.fs.glsl");
     program.Link();
     program.Use();
     program.PrintActiveAttribs();
     program.PrintActiveUniformBlocks();
     program.PrintActiveUniforms();
 
-    program.SetUniform("u_inner", 4);
-    program.SetUniform("u_outer", 4);
-    program.SetUniform("u_line_width", 1.5f);
+    program.SetUniform("u_tess_level", 4);
+    program.SetUniform("u_line_width", 0.8f);
     program.SetUniform("u_line_color", glm::vec4(0.05f, 0.0f, 0.05f, 1.0f));
-    program.SetUniform("u_quad_color", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    program.SetUniform("u_light_position", glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+    program.SetUniform("u_light_intensity", glm::vec3(1.0f, 1.0f, 1.0f));
+    program.SetUniform("u_Kd", glm::vec3(0.9f, 0.9f, 1.0f));
 }
 
 void InitGeometry()
 {
-    float v[]
-    {
-        -1.0f, -1.0f,
-         1.0f, -1.0f,
-         1.0f,  1.0f,
-        -1.0f,  1.0f
-    };
+    teapot_patch = std::make_unique<glsl_shader::TeapotPatch>();
 
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(v), v, GL_STATIC_DRAW);
-
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
-
-    glBindVertexArray(0);
-
-    glPatchParameteri(GL_PATCH_VERTICES, 4);
-
-    GLint max_vertices = 0;
-    glGetIntegerv(GL_MAX_PATCH_VERTICES, &max_vertices);
-    std::cout << "Max patch vertices: " << max_vertices << std::endl;
+    glPatchParameteri(GL_PATCH_VERTICES, 16);
 }
 
 void TerminateGeometry()
 {
-    glDeleteBuffers(1, &vbo);
-    glDeleteVertexArrays(1, &vao);
+    teapot_patch.release();
+}
+
+void Update()
+{
+    float current_time = static_cast<float>(glfwGetTime());
+    float delta_time = current_time - last_time;
+    last_time = current_time;
+    angle += glm::half_pi<float>() * 0.25f * delta_time;
+
+    if (angle > glm::two_pi<float>())
+    {
+        angle -= glm::two_pi<float>();
+    }
 }
