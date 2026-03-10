@@ -59,3 +59,4 @@ cmake ..
 - [Chapter46 细分曲线](src/chapter46/Chapter46.md)
 - [Chapter47 细分 2D 四边形](src/chapter47/Chapter47.md)
 - [Chapter48 细分 3D 曲面](src/chapter48/Chapter48.md)
+- [Chapter49 基于深度进行细分](src/chapter49/Chapter49.md)
